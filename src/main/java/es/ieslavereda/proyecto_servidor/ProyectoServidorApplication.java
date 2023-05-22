@@ -1,4 +1,4 @@
-package es.ieslavereda.Proyecto_Servidor;
+package es.ieslavereda.proyecto_servidor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
