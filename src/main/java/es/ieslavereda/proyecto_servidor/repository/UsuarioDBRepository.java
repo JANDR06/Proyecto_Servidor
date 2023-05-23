@@ -48,15 +48,16 @@ public class UsuarioDBRepository implements IUsuarioRepository {
     @Override
     public Usuario deleteUsuarioById(int id) throws SQLException {
 
-        Usuario usuario;
+        Usuario usuario --> has de crear-te un mètode per a retornar usuari by Id;
+        usuario = Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2)).apellidos(rs.getString(3)).build();
+
+
         String sql = " {? = call eliminar_usuario(?)}";
 
         try (Connection con = MyDataSource.getMySQLDataSource().getConnection();
              CallableStatement cs = con.prepareCall(sql)) {
-            cs.setInt(1, id);
-            ResultSet rs = cs.executeQuery();
-            rs.next();
-            usuario = Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2)).apellidos(rs.getString(3)).build();
+            cs.setInt(2, id);
+            cs.execute();
         }
 
         return usuario;
