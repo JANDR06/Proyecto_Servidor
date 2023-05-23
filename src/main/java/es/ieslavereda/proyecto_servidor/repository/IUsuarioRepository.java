@@ -18,4 +18,7 @@ public interface IUsuarioRepository {
     // GET: OBTENCIÓN DE TODOS LOS USUARIOS
     List<Usuario> getAllUsuarios() throws SQLException;
 
+    // GET: OBTENCIÓN DE UN USUARIO MEDIANTE SU ID
+    Usuario getUsuarioById(int id) throws SQLException;
+
 }

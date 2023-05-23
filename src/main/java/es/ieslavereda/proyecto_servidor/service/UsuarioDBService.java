@@ -29,4 +29,8 @@ public class UsuarioDBService {
     public List<Usuario> getAllUsuariosDB() throws SQLException {
         return repository.getAllUsuarios();
     }
+
+    public Usuario getUsuarioById(int id) throws SQLException {
+        return repository.getUsuarioById(id);
+    }
 }

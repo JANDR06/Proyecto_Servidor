@@ -48,19 +48,29 @@ public class UsuarioDBRepository implements IUsuarioRepository {
     @Override
     public Usuario deleteUsuarioById(int id) throws SQLException {
 
-        Usuario usuario --> has de crear-te un mètode per a retornar usuari by Id;
-        usuario = Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2)).apellidos(rs.getString(3)).build();
+        //Usuario usuario --> has de crear-te un mètode per a retornar usuari by Id;
+        Usuario usuario = getUsuarioById(id);
+
+        //usuario = Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2)).apellidos(rs.getString(3)).build();
 
 
         String sql = " {? = call eliminar_usuario(?)}";
 
         try (Connection con = MyDataSource.getMySQLDataSource().getConnection();
              CallableStatement cs = con.prepareCall(sql)) {
+            cs.registerOutParameter(1, Types.INTEGER);
             cs.setInt(2, id);
             cs.execute();
+
+            int resultado = cs.getInt(1);
+            if (resultado == 1) {
+                return usuario;
+            } else {
+                throw new SQLException("No se pudo eliminar el usuario");
+            }
         }
 
-        return usuario;
+
     }
 
     @Override
@@ -78,6 +88,21 @@ public class UsuarioDBRepository implements IUsuarioRepository {
         }
 
         return usuariosDB;
+    }
+
+    @Override
+    public Usuario getUsuarioById(int id) throws SQLException {
+        Usuario usuario;
+        String sql = "SELECT * FROM usuario where id = " +id;
+
+        try (Connection con = MyDataSource.getMySQLDataSource().getConnection();
+             CallableStatement cs = con.prepareCall(sql)) {
+            cs.setInt(1, id);
+            ResultSet rs = cs.executeQuery();
+            rs.next();
+            usuario = Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2)).apellidos(rs.getString(3)).build();
+        }
+        return usuario;
     }
 
 }

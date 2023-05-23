@@ -69,5 +69,20 @@ public class UsuarioDBController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") int id) {
+        try {
+            Usuario u = service.getUsuarioById(id);
+            if (u == null)
+                return new ResponseEntity<>("El usuario no existe", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(u, HttpStatus.OK);
+        } catch (SQLException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("code", e.getErrorCode());
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
