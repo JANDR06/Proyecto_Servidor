@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/apidb/")
 public class OficioDBController {
 
     @Autowired
@@ -20,8 +20,10 @@ public class OficioDBController {
 
     @GetMapping("/oficios/")
     public ResponseEntity<?> getAllUsuarios(){
+
         try {
             return new ResponseEntity<>(service.getAllOficios(), HttpStatus.OK);
+
         } catch(SQLException e){
             Map<String,Object> response = new HashMap<>();
             response.put("code",e.getErrorCode());
