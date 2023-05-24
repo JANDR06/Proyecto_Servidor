@@ -16,4 +16,6 @@ public class OficioDBService {
     public List<Oficio> getAllOficios() throws SQLException {
         return repository.getAllOficios();
     }
+
+
 }

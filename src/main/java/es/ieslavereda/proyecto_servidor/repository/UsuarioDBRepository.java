@@ -87,7 +87,7 @@ public class UsuarioDBRepository implements IUsuarioRepository {
     @Override
     public Usuario getUsuarioById(int id) throws SQLException {
         Usuario usuario;
-        String sql = "SELECT * FROM usuario where id = " +id;
+        String sql = "SELECT * FROM Usuario where idUsuario = (?)";
 
         try (Connection con = MyDataSource.getMySQLDataSource().getConnection();
              CallableStatement cs = con.prepareCall(sql)) {

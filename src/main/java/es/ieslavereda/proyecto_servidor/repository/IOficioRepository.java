@@ -7,4 +7,5 @@ import java.util.List;
 public interface IOficioRepository {
 
     List<Oficio> getAllOficios() throws SQLException;
+
 }
