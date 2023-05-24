@@ -17,5 +17,4 @@ public class OficioDBService {
         return repository.getAllOficios();
     }
 
-
 }
