@@ -17,12 +17,14 @@ public class UsuarioDBRepository implements IUsuarioRepository {
         String query = " { call crear_usuario(?,?,?,?,?)} ";
 
         try (Connection connection = MyDataSource.getMySQLDataSource().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)
+             CallableStatement cs = connection.prepareCall(query)
         ) {
-            preparedStatement.setInt(1, usuario.getIdUsuario());
-            preparedStatement.setString(2, usuario.getNombre());
-            preparedStatement.setString(3, usuario.getApellidos());
-            preparedStatement.executeUpdate();
+            cs.registerOutParameter(1, usuario.getIdUsuario());
+            cs.setInt(2, usuario.getIdUsuario());
+            cs.setString(3, usuario.getNombre());
+            cs.setString(4, usuario.getApellidos());
+            cs.setInt(5, usuario.getIdOficio());
+            cs.executeUpdate();
 
             return usuario;
         }
@@ -34,43 +36,35 @@ public class UsuarioDBRepository implements IUsuarioRepository {
         String query = " {? = call actualizar_usuario(?,?,?,?)}";
 
         try (Connection connection = MyDataSource.getMySQLDataSource().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)
+             CallableStatement cs = connection.prepareCall(query)
         ) {
-            preparedStatement.setString(1, usuario.getNombre());
-            preparedStatement.setString(2, usuario.getApellidos());
-            preparedStatement.setInt(3,usuario.getIdUsuario());
-
-            preparedStatement.executeUpdate();
-            return usuario;
+            cs.setInt(2, usuario.getIdUsuario());
+            cs.setString(3, usuario.getNombre());
+            cs.setString(4, usuario.getApellidos());
+            cs.setInt(5, usuario.getIdOficio());
+            cs.execute();
+            int borrados = cs.getInt(1);
+            System.out.println(borrados);
         }
+        return usuario;
     }
 
     @Override
     public Usuario deleteUsuarioById(int id) throws SQLException {
 
-        //Usuario usuario --> has de crear-te un mètode per a retornar usuari by Id;
         Usuario usuario = getUsuarioById(id);
-
-        //usuario = Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2)).apellidos(rs.getString(3)).build();
-
-
         String sql = " {? = call eliminar_usuario(?)}";
 
         try (Connection con = MyDataSource.getMySQLDataSource().getConnection();
              CallableStatement cs = con.prepareCall(sql)) {
-            cs.registerOutParameter(1, Types.INTEGER);
+
             cs.setInt(2, id);
             cs.execute();
+            int borrados = cs.getInt(1);
+            System.out.println(borrados);
 
-            int resultado = cs.getInt(1);
-            if (resultado == 1) {
-                return usuario;
-            } else {
-                throw new SQLException("No se pudo eliminar el usuario");
-            }
         }
-
-
+        return usuario;
     }
 
     @Override

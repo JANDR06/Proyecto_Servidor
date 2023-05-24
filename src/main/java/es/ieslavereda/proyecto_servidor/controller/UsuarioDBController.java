@@ -21,6 +21,7 @@ public class UsuarioDBController {
     public ResponseEntity<?> getAllUsuarios(){
         try {
             return new ResponseEntity<>(service.getAllUsuariosDB(), HttpStatus.OK);
+
         } catch(SQLException e){
             Map<String,Object> response = new HashMap<>();
             response.put("code",e.getErrorCode());
@@ -30,9 +31,10 @@ public class UsuarioDBController {
     }
 
     @PostMapping("/usuarios/")
-    public ResponseEntity<?> addUser(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
         try {
             return new ResponseEntity<>(service.addUsuario(usuario), HttpStatus.OK);
+
         } catch (SQLException e) {
             Map<String, Object> response = new HashMap<>();
             response.put("code", e.getErrorCode());
@@ -44,24 +46,21 @@ public class UsuarioDBController {
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<?> deleteUsuarioById(@PathVariable("id") int id) {
         try {
-            Usuario u = service.deleteUsuarioById(id);
-            if (u == null)
-                return new ResponseEntity<>("El usuario no existe", HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(u, HttpStatus.OK);
+            return new ResponseEntity<>(service.deleteUsuarioById(id), HttpStatus.OK);
 
-        } catch (SQLException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("code", e.getErrorCode());
-            response.put("message", e.getMessage());
-
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch(SQLException e){
+            Map<String,Object> response = new HashMap<>();
+            response.put("code",e.getErrorCode());
+            response.put("message",e.getMessage());
+            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/usuarios/")
-    public ResponseEntity<?> updateUser(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> updateUsuario(@RequestBody Usuario usuario) {
         try {
             return new ResponseEntity<>(service.updateUsuario(usuario), HttpStatus.OK);
+
         } catch (SQLException e) {
             Map<String, Object> response = new HashMap<>();
             response.put("code", e.getErrorCode());
@@ -71,17 +70,15 @@ public class UsuarioDBController {
     }
 
     @GetMapping("/usuarios/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") int id) {
+    public ResponseEntity<?> getById(@PathVariable("id") int id) throws SQLException {
         try {
-            Usuario u = service.getUsuarioById(id);
-            if (u == null)
-                return new ResponseEntity<>("El usuario no existe", HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(u, HttpStatus.OK);
+            return new ResponseEntity<>(service.getUsuarioById(id), HttpStatus.OK);
+
         } catch (SQLException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("code", e.getErrorCode());
-            response.put("message", e.getMessage());
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            Map<String,Object> response = new HashMap<>();
+            response.put("code",e.getErrorCode());
+            response.put("message",e.getMessage());
+            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
