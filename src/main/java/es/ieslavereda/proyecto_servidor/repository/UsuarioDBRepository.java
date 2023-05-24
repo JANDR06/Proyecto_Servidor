@@ -70,14 +70,15 @@ public class UsuarioDBRepository implements IUsuarioRepository {
     @Override
     public List<Usuario> getAllUsuarios() throws SQLException {
         ArrayList<Usuario> usuariosDB = new ArrayList<>();
-        String query = " { call obtener_usuarios} ";
+        String query = " { call obtener_usuarios()} ";
 
         try(Connection connection = MyDataSource.getMySQLDataSource().getConnection();
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query)){
 
             while(rs.next()){
-                usuariosDB.add(Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2)).apellidos(rs.getString(3)).build());
+                usuariosDB.add(Usuario.builder().idUsuario(rs.getInt(1)).nombre(rs.getString(2))
+                        .apellidos(rs.getString(3)).idOficio(rs.getInt(4)).build());
             }
         }
 

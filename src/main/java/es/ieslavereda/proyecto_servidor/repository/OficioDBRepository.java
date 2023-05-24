@@ -33,10 +33,7 @@ public class OficioDBRepository implements IOficioRepository {
         }
     }
 
-    @Override
-    public String getImageOficio() throws SQLException {
-        return null;
-    }
+
 
 
 }
