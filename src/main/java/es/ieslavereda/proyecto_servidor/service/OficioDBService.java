@@ -17,5 +17,7 @@ public class OficioDBService {
         return repository.getAllOficios();
     }
 
-
+    public String getImageOficio() throws SQLException {
+        return repository.getImageOficio();
+    }
 }

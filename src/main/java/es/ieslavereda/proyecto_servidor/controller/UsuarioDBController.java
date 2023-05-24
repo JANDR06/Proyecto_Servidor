@@ -57,7 +57,7 @@ public class UsuarioDBController {
     }
 
     @PutMapping("/usuarios/")
-    public ResponseEntity<?> updateUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> updateUsuario(@RequestBody Usuario usuario) throws SQLException {
         try {
             return new ResponseEntity<>(service.updateUsuario(usuario), HttpStatus.OK);
 
