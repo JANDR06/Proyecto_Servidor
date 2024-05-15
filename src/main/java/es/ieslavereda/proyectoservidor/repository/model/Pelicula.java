@@ -11,7 +11,6 @@ import java.sql.Date;
 @Builder
 @ToString
 public class Pelicula {
-
     private String id;
     private String tipo;
     private String titulo;

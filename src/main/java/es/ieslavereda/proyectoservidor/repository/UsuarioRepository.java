@@ -22,8 +22,19 @@ public class UsuarioRepository implements IUsuarioRepository {
     }
 
     @Override
-    public Usuario deleteUsuario(int id) throws SQLException {
-        return null;
+    public Usuario deleteUsuario(String dni) throws SQLException {
+        Usuario usuario = getUsuario(dni);
+        String query = "DELETE FROM cliente WHERE DNI = ?";
+
+        if (usuario == null)
+            return null;
+
+        try (Connection connection = DataSource.getMyOracleDataSource().getConnection();
+            PreparedStatement ps = connection.prepareStatement(query)){
+            ps.setString(1, dni);
+            ps.executeUpdate();
+        }
+        return usuario;
     }
 
     /*

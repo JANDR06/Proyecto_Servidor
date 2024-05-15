@@ -10,6 +10,6 @@ public interface IUsuarioRepository {
     Usuario getUsuario(String dni) throws SQLException;
     Usuario addUsuario(Usuario usuario) throws SQLException;
     Usuario updateUsuario(Usuario usuario) throws SQLException;
-    Usuario deleteUsuario(int id) throws SQLException;
+    Usuario deleteUsuario(String dni) throws SQLException;
     List<Usuario> getAllUsuarios() throws SQLException;
 }
