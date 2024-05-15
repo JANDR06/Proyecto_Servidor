@@ -18,4 +18,8 @@ public class UsuarioService {
         return repository.getAllUsuarios();
     }
 
+    public Usuario getUsuario(String dni) throws SQLException {
+        return repository.getUsuario(dni);
+    }
+
 }

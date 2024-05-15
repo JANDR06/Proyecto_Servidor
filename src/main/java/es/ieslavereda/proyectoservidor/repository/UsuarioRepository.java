@@ -11,13 +11,6 @@ import java.util.List;
 @Repository
 public class UsuarioRepository implements IUsuarioRepository {
 
-
-
-    @Override
-    public Usuario getUsuario(int id) throws SQLException {
-        return null;
-    }
-
     @Override
     public Usuario addUsuario(Usuario usuario) throws SQLException {
         return null;
@@ -66,7 +59,7 @@ public class UsuarioRepository implements IUsuarioRepository {
     @Override
     public List<Usuario> getAllUsuarios() throws SQLException {
         List<Usuario> usuarios = new ArrayList<>();
-        String query = "SELECT * FROM Cliente";
+        String query = "SELECT * FROM cliente";
 
         try(Connection connection = DataSource.getMyOracleDataSource().getConnection();
             Statement statement = connection.createStatement();
@@ -86,8 +79,35 @@ public class UsuarioRepository implements IUsuarioRepository {
                         .build());
             }
         }
-
         return usuarios;
+    }
+
+    @Override
+    public Usuario getUsuario(String dni) throws SQLException {
+        Usuario usuario = null;
+        String query = "SELECT * FROM cliente WHERE DNI = ?";
+
+        try (Connection connection = DataSource.getMyOracleDataSource().getConnection();
+            PreparedStatement ps = connection.prepareStatement(query)){
+
+            ps.setString(1,dni);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next())
+                usuario = Usuario.builder().dni(rs.getString(1))
+                        .usuario(rs.getString(2))
+                        .contrasenya(rs.getString(3))
+                        .nombre(rs.getString(4))
+                        .apellidos(rs.getString(5))
+                        .email(rs.getString(6))
+                        .domicilio(rs.getString(7))
+                        .codigo_postal(rs.getString(8))
+                        .fecha_nacimiento(rs.getDate(9))
+                        .tarjeta_credito(rs.getString(10))
+                        .build();
+        }
+
+        return usuario;
     }
 
 
