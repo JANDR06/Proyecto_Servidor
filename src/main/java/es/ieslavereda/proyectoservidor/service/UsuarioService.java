@@ -22,4 +22,8 @@ public class UsuarioService {
         return repository.getUsuario(dni);
     }
 
+    public Usuario deleteUsuario(String dni) throws SQLException {
+        return repository.deleteUsuario(dni);
+    }
+
 }

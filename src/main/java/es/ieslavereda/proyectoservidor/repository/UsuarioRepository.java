@@ -24,7 +24,7 @@ public class UsuarioRepository implements IUsuarioRepository {
     @Override
     public Usuario deleteUsuario(String dni) throws SQLException {
         Usuario usuario = getUsuario(dni);
-        String query = "DELETE FROM cliente WHERE DNI = ?";
+        String query = "DELETE FROM cliente WHERE dniCliente = ?";
 
         if (usuario == null)
             return null;
@@ -96,7 +96,7 @@ public class UsuarioRepository implements IUsuarioRepository {
     @Override
     public Usuario getUsuario(String dni) throws SQLException {
         Usuario usuario = null;
-        String query = "SELECT * FROM cliente WHERE DNI = ?";
+        String query = "SELECT * FROM cliente WHERE dniCliente = ?";
 
         try (Connection connection = DataSource.getMyOracleDataSource().getConnection();
             PreparedStatement ps = connection.prepareStatement(query)){
