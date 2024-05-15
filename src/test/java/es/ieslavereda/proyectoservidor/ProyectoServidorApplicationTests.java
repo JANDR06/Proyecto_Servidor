@@ -1,4 +1,4 @@
-package es.ieslavereda.proyecto_servidor;
+package es.ieslavereda.proyectoservidor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
