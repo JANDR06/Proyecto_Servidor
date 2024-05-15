@@ -47,7 +47,7 @@ public class UsuarioController {
 
     @DeleteMapping("/usuarios/{dni}")
     public ResponseEntity<?> deleteUsuario(@PathVariable("dni") String dni) {
-        try{
+        try {
             Usuario usuario = service.deleteUsuario(dni);
             if(usuario == null)
                 return new ResponseEntity<>("Usuario no encontrado",HttpStatus.NOT_FOUND);

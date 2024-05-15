@@ -1,7 +1,7 @@
 package es.ieslavereda.proyectoservidor.controller;
 
 
-import es.ieslavereda.proyectoservidor.service.UsuarioService;
+import es.ieslavereda.proyectoservidor.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/*
 @RestController
 @RequestMapping("/miraveredaAPI")
 public class PeliculaController {
@@ -36,4 +34,4 @@ public class PeliculaController {
     }
 }
 
- */
+

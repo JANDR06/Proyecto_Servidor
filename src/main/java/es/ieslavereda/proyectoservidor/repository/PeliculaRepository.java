@@ -2,6 +2,7 @@ package es.ieslavereda.proyectoservidor.repository;
 
 import es.ieslavereda.proyectoservidor.repository.model.DataSource;
 import es.ieslavereda.proyectoservidor.repository.model.Pelicula;
+import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+@Repository
 public class PeliculaRepository implements IPeliculaRepository {
 
 
@@ -36,14 +37,14 @@ public class PeliculaRepository implements IPeliculaRepository {
     @Override
     public List<Pelicula> getAllPeliculas() throws SQLException {
         List<Pelicula> peliculas = new ArrayList<>();
-        String query = "SELECT * FROM pelicula";
+        String query = "SELECT idcontenido,TIPO, TITULO, IDIOMA, GENERO, FECHA_ESTRENO, DESCRIPCION, DIRECTOR, ACTORES, DURACION, VALORACION_MEDIA  FROM contenido WHERE EXISTS(SELECT idcontenido from pelicula)";
 
-        try(Connection connection = DataSource.getMyOracleDataSource().getConnection();
+        try (Connection connection = DataSource.getMyOracleDataSource().getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query)){
 
             while (rs.next()) {
-                peliculas.add(Pelicula.builder().id(rs.getString(1))
+                peliculas.add(Pelicula.builder().id(rs.getInt(1))
                                 .tipo(rs.getString(2))
                                 .titulo(rs.getString(3))
                                 .idioma(rs.getString(4))
@@ -61,4 +62,4 @@ public class PeliculaRepository implements IPeliculaRepository {
     }
 }
 
- */
+

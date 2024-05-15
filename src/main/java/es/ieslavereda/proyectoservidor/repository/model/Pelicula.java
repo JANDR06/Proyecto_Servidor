@@ -11,7 +11,7 @@ import java.sql.Date;
 @Builder
 @ToString
 public class Pelicula {
-    private String id;
+    private int id;
     private String tipo;
     private String titulo;
     private String idioma;
@@ -33,7 +33,7 @@ public class Pelicula {
 
     @Override
     public int hashCode(){
-        return id.hashCode();
+        return id;
     }
 
 }
