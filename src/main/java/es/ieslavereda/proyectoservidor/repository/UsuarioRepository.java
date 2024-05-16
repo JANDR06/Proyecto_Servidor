@@ -12,13 +12,32 @@ import java.util.List;
 public class UsuarioRepository implements IUsuarioRepository {
 
     @Override
-    public Usuario addUsuario(Usuario usuario) throws SQLException {
-        return null;
-    }
-
-    @Override
     public Usuario updateUsuario(Usuario usuario) throws SQLException {
-        return null;
+        String query = "UPDATE cliente SET usuario = ?, contraseña = ?, nombre = ?, apellidos = ?, email = ?, domicilio = ?, codigo_postal = ?, fecha_nacimiento = ?, tarjeta_credito = ? where dniCliente = ?";
+        Usuario usuario1 = getUsuario(usuario.getDni());
+
+        if (usuario1 == null)
+            return null;
+
+        try (Connection connection = DataSource.getMyOracleDataSource().getConnection();
+            PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1,usuario.getUsuario());
+            ps.setString(2,usuario.getContrasenya());
+            ps.setString(3,usuario.getNombre());
+            ps.setString(4,usuario.getApellidos());
+            ps.setString(5,usuario.getEmail());
+            ps.setString(6,usuario.getDomicilio());
+            ps.setString(7,usuario.getCodigo_postal());
+            ps.setDate(8,usuario.getFecha_nacimiento());
+            ps.setString(9,usuario.getTarjeta_credito());
+            ps.setString(10,usuario.getDni());
+
+            ps.executeUpdate();
+
+        }
+
+        return getUsuario(usuario.getDni());
     }
 
     @Override
@@ -117,7 +136,33 @@ public class UsuarioRepository implements IUsuarioRepository {
                         .tarjeta_credito(rs.getString(10))
                         .build();
         }
+        return usuario;
+    }
 
+    @Override
+    public Usuario addUsuario(Usuario usuario) throws SQLException {
+        String query = "INSERT INTO cliente(dniCliente, usuario, contraseña, nombre, apellidos, email, domicilio, codigo_postal, fecha_nacimiento, tarjeta_credito) VALUES(?,?,?,?,?,?,?,?,?,?)";
+        Usuario usuario1 = getUsuario(usuario.getDni());
+
+        if (usuario1 != null)
+            return null;
+
+        try (Connection connection = DataSource.getMyOracleDataSource().getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setString(1,usuario.getDni());
+            ps.setString(2,usuario.getUsuario());
+            ps.setString(3,usuario.getContrasenya());
+            ps.setString(4,usuario.getNombre());
+            ps.setString(5,usuario.getApellidos());
+            ps.setString(6,usuario.getEmail());
+            ps.setString(7,usuario.getDomicilio());
+            ps.setString(8,usuario.getCodigo_postal());
+            ps.setDate(9,usuario.getFecha_nacimiento());
+            ps.setString(10,usuario.getTarjeta_credito());
+
+            ps.executeUpdate();
+        }
         return usuario;
     }
 

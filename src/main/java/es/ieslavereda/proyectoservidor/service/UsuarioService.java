@@ -26,4 +26,13 @@ public class UsuarioService {
         return repository.deleteUsuario(dni);
     }
 
+    public Usuario addUsuario(Usuario usuario) throws SQLException {
+        return repository.addUsuario(usuario);
+    }
+
+    public Usuario updateUsuario(Usuario usuario) throws SQLException {
+        return repository.updateUsuario(usuario);
+    }
+
+
 }

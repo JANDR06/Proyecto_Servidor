@@ -1,6 +1,5 @@
 package es.ieslavereda.proyectoservidor.controller;
 
-
 import es.ieslavereda.proyectoservidor.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
